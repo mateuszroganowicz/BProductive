@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BProductive3</string>
+    <string name="title_timer">Timer</string>
+    <string name="title_mood">Mood</string>
+    <string name="title_music">Music</string>
+    <string name="title_appinfo">AppInfo</string>
+
+
+</resources>

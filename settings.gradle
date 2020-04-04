@@ -1,0 +1,2 @@
+rootProject.name='BProductive3'
+include ':app'
