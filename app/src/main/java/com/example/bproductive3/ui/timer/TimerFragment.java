@@ -17,12 +17,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.bproductive3.R;
 
-
-
 public class TimerFragment extends Fragment  {
 
-    private final static long start_time = 6000; //In miliseconds
-    private final static long break_time = 16000; //In miliseconds
+    private final static long start_time = 6000; //In milliseconds
+    private final static long break_time = 16000; //In milliseconds
     private long timeInMs = start_time;
     private TextView textCountDown;
     private ImageButton ButtonStartPause;
@@ -31,7 +29,6 @@ public class TimerFragment extends Fragment  {
     private ImageView Circle1;
     private ImageView Circle2;
     private ImageView Circle3;
-
 
     private CountDownTimer countDownTimer;
     private boolean timerRun;
@@ -50,7 +47,6 @@ public class TimerFragment extends Fragment  {
         Circle1 = view.findViewById(R.id.circle_1);
         Circle2 = view.findViewById(R.id.circle_2);
         Circle3 = view.findViewById(R.id.circle_3);
-
 
         ButtonStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
