@@ -36,14 +36,17 @@ public class MoodFragment extends Fragment
 
         ImageButton happyBtt = root.findViewById(R.id.button_happy);
         ImageButton sadBtt = root.findViewById(R.id.button_sad);
+        ImageButton confidentBtt = root.findViewById(R.id.button_cool);
+        ImageButton stressedBtt = root.findViewById(R.id.button_stress);
+        ImageButton angryBtt = root.findViewById(R.id.button_angry);
+        ImageButton normalBtt = root.findViewById(R.id.button_shock);
 
         happyBtt.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(getActivity(),"You are Happy!",Toast.LENGTH_SHORT).show();
-                Util.changeToTheme(getActivity(), Util.THEME_HAPPY);
+                Util.changeToTheme(Objects.requireNonNull(getActivity()), Util.THEME_HAPPY);
             }
         });
 
@@ -52,8 +55,43 @@ public class MoodFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(getActivity(),"You are Sad :(",Toast.LENGTH_SHORT).show();
-                Util.changeToTheme(getActivity(), Util.THEME_SAD);
+                Util.changeToTheme(Objects.requireNonNull(getActivity()), Util.THEME_SAD);
+            }
+        });
+
+        confidentBtt.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Util.changeToTheme(Objects.requireNonNull(getActivity()), Util.THEME_CONFIDENT);
+            }
+        });
+
+        stressedBtt.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Util.changeToTheme(Objects.requireNonNull(getActivity()), Util.THEME_STRESSED);
+            }
+        });
+
+        angryBtt.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Util.changeToTheme(Objects.requireNonNull(getActivity()), Util.THEME_ANGRY);
+            }
+        });
+
+        normalBtt.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Util.changeToTheme(Objects.requireNonNull(getActivity()), Util.THEME_NORMAL);
             }
         });
         return root;
