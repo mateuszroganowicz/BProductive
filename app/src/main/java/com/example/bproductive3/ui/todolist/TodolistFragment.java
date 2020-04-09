@@ -23,13 +23,7 @@ public class TodolistFragment extends Fragment {
         todolistViewModel =
                 ViewModelProviders.of(this).get(TodolistViewModel.class);
         View root = inflater.inflate(R.layout.fragment_todolist, container, false);
-        final TextView textView = root.findViewById(R.id.text_todolist);
-        todolistViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
         return root;
     }
 }

@@ -1,52 +1,46 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#EB3434</item>
-        <item name="colorPrimaryDark">#BD2B2B</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="ThemeAppHappy" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#ff8419</item>
-        <item name="colorPrimaryDark">#B25300</item>
-        <item name="android:textColor">#000</item>
-        <item name="android:background">#ffd05c</item>
+        <item name="colorPrimaryDark">@color/happyAlt</item>
+        <item name="android:textColor">@color/happyText</item>
+        <item name="android:background">@color/happySecondary</item>
     </style>
 
     <style name="ThemeAppSad" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#669095</item>
-        <item name="colorPrimaryDark">#4c6c70</item>
-        <item name="android:textColor">#000</item>
-        <item name="android:background">#80b4bb</item>
+        <item name="colorPrimaryDark">@color/sadPrimary</item>
+        <item name="android:textColor">@color/sadText</item>
+        <item name="android:background">@color/sadSecondary</item>
     </style>
 
     <style name="ThemeAppStressed" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#7e3972</item>
-        <item name="colorPrimaryDark">#580e4a</item>
-        <item name="android:textColor">#fff</item>
-        <item name="android:background">#ae61a0</item>
+        <item name="colorPrimaryDark">@color/stressedPrimary</item>
+        <item name="android:textColor">@color/stressedText</item>
+        <item name="android:background">@color/stressedSecondary</item>
     </style>
 
     <style name="ThemeAppNormal" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#141d26</item>
-        <item name="colorPrimaryDark">#c51f5d</item>
-        <item name="android:textColor">#000</item>
+        <item name="colorPrimaryDark">@color/normalPrimary</item>
+        <item name="android:textColor">@color/normalText</item>
+        <item name="android:background">@color/normalSecondary</item>
     </style>
 
     <style name="ThemeAppConfident" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#588b76</item>
-        <item name="colorPrimaryDark">#18392b</item>
-        <item name="android:textColor">#fff</item>
-        <item name="android:background">#85aa9b</item>
+        <item name="colorPrimaryDark">@color/confidentPrimary</item>
+        <item name="android:textColor">@color/confidentText</item>
+        <item name="android:background">#C9D8D2</item>
     </style>
 
     <style name="ThemeAppAngry" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#6a0503</item>
-        <item name="colorPrimaryDark">#460302</item>
-        <item name="android:textColor">#fff</item>
-        <item name="android:background">#b47877</item>
+        <item name="colorPrimaryDark">@color/angryPrimary</item>
+        <item name="android:textColor">@color/angryText</item>
+        <item name="android:background">@color/angrySecondary</item>
     </style>
 
 </resources>
