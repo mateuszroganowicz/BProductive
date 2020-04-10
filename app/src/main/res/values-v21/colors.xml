@@ -5,15 +5,13 @@
     <color name="colorAccent">#03DAC5</color>
 
     <!-- color palette sad theme-->
-    <color name="sadPrimary">#4c6c70</color>
-    <color name="sadSecondary">#CCE1E3</color>
+    <color name="sadPrimary">#28484C</color>
+    <color name="sadSecondary">#4C6C70</color>
     <color name="sadText">#202040</color>
-    <color name="sadAlt">#363434</color>
-    <color name="sadAltSecondary">#efecec</color>
 
     <!-- color palette confident theme-->
-    <color name="confidentPrimary">#18392b</color>
-    <color name="confidentSecondary">#85aa9b</color>
+    <color name="confidentPrimary">#3C6E25</color>
+    <color name="confidentSecondary">#b1c5a7</color>
     <color name="confidentText">#272727</color>
 
     <!-- color palette stressed theme-->
@@ -21,24 +19,20 @@
     <color name="stressedSecondary">#fbdff0</color>
     <color name="stressedText">#202040</color>
     <color name="stressedAlt">#382039</color>
-    <color name="stressedTextAlt">#fff</color>
 
     <!-- color palette normal theme-->
-    <color name="normalPrimary">#1eb2a6</color>
-    <color name="normalSecondary">#d4f8e8</color>
-    <color name="normalText">#000</color>
-    <color name="normalAlt">#6A3673</color>
+    <color name="normalPrimary">#4d4646</color>
+    <color name="normalSecondary">#e6e6fa</color>
+    <color name="normalText">#28282C</color>
 
     <!-- color palette angry theme-->
     <color name="angryPrimary">#C82121</color>
     <color name="angrySecondary">#ff6363</color>
     <color name="angryText">#dee1ec</color>
-    <color name="angryAlt">#2c003e</color>
 
     <!-- color palette happy theme-->
-    <color name="happyPrimary">#feb72b</color>
-    <color name="happySecondary">#fffcc1</color>
+    <color name="happyPrimary">#fbc11a</color>
+    <color name="happySecondary">#fade98</color>
     <color name="happyText">#263f44</color>
-    <color name="happyAlt">#FF6363</color>
 
 </resources>

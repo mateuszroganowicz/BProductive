@@ -1,0 +1,45 @@
+<resources>
+
+    <style name="ThemeAppNormal" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/normalPrimary</item>
+        <item name="colorPrimaryDark">@color/normalPrimary</item>
+        <item name="android:textColor">@color/normalText</item>
+        <item name="android:backgroundTint">@color/normalSecondary</item>
+    </style>
+
+    <style name="ThemeAppHappy" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/happyPrimary</item>
+        <item name="colorPrimaryDark">@color/happyPrimary</item>
+        <item name="android:textColor">@color/happyText</item>
+        <item name="android:backgroundTint">@color/happySecondary</item>
+    </style>
+
+    <style name="ThemeAppSad" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/sadPrimary</item>
+        <item name="colorPrimaryDark">@color/sadPrimary</item>
+        <item name="android:textColor">@color/sadText</item>
+        <item name="android:backgroundTint">@color/sadSecondary</item>
+    </style>
+
+    <style name="ThemeAppStressed" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/stressedPrimary</item>
+        <item name="colorPrimaryDark">@color/stressedPrimary</item>
+        <item name="android:textColor">@color/stressedText</item>
+        <item name="android:backgroundTint">@color/stressedSecondary</item>
+    </style>
+
+    <style name="ThemeAppConfident" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/confidentPrimary</item>
+        <item name="colorPrimaryDark">@color/confidentPrimary</item>
+        <item name="android:textColor">@color/confidentText</item>
+        <item name="android:backgroundTint">@color/confidentSecondary</item>
+    </style>
+
+    <style name="ThemeAppAngry" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/angryPrimary</item>
+        <item name="colorPrimaryDark">@color/angryPrimary</item>
+        <item name="android:textColor">@color/angryText</item>
+        <item name="android:backgroundTint">@color/angrySecondary</item>
+    </style>
+
+</resources>

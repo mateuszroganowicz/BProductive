@@ -2,6 +2,7 @@ package com.example.bproductive3.ui.mood;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -33,6 +34,8 @@ public class MoodFragment extends Fragment
     {
         moodViewModel = ViewModelProviders.of(this).get(MoodViewModel.class);
         View root = inflater.inflate(R.layout.fragment_mood, container, false);
+
+        final TextView text_mood = root.findViewById(R.id.text_mood);
 
         ImageButton happyBtt = root.findViewById(R.id.button_happy);
         ImageButton sadBtt = root.findViewById(R.id.button_sad);

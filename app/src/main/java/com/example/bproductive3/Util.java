@@ -27,6 +27,9 @@ public class Util
         switch (sTheme)
         {
             default:
+            case THEME_NORMAL:
+                activity.setTheme(R.style.ThemeAppNormal);
+                break;
             case THEME_HAPPY:
                 activity.setTheme(R.style.ThemeAppHappy);
                 break;
@@ -38,9 +41,6 @@ public class Util
                 break;
             case THEME_CONFIDENT:
                 activity.setTheme(R.style.ThemeAppConfident);
-                break;
-            case THEME_NORMAL:
-                activity.setTheme(R.style.ThemeAppNormal);
                 break;
             case THEME_STRESSED:
                 activity.setTheme(R.style.ThemeAppStressed);
