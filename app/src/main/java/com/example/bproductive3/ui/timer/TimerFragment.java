@@ -59,6 +59,8 @@ public class TimerFragment extends Fragment  {
             @Override
             public void onClick(View v) {
                 reset();
+                System.out.println(timerRun);
+                System.out.println("Time to break: " + timeToBreak);
             }
         });
 
@@ -112,24 +114,42 @@ public class TimerFragment extends Fragment  {
 
         textCountDown.setText(timeLeft);
         if(timeLeft.equals("00:00") && session < totalSessions){
-
             breakTime();
         }
         else if(timeLeft.equals("00:00") && session == totalSessions){
             reset();
+            System.out.println("Time left: " + timeInMs);
+            System.out.println(timerRun);
+            System.out.println("Time to break: " + timeToBreak);
+
         }
 
     }
 
     public void reset(){
+        Circle0.setImageResource(R.drawable.ic_circle);
+        Circle1.setImageResource(R.drawable.ic_circle);
+        Circle2.setImageResource(R.drawable.ic_circle);
+        Circle3.setImageResource(R.drawable.ic_circle);
+        session = 0;
+
+
         if(timerRun) {
             countDownTimer.cancel();
             timeInMs = start_time;
             ButtonStartPause.setImageResource(R.drawable.ic_play);
             timerRun = false;
+            timeToBreak = true;
             updateTimer();
+
         }
-        else{}
+        else{
+            timeInMs = start_time;
+            timerRun = false;
+            timeToBreak = true;
+            updateTimer();
+
+        }
     }
 
     public void breakTime(){
