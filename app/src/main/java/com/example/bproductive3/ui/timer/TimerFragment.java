@@ -29,6 +29,7 @@ public class TimerFragment extends Fragment  {
     private ImageView Circle1;
     private ImageView Circle2;
     private ImageView Circle3;
+    private TextView workStatus;
 
     private CountDownTimer countDownTimer;
     private boolean timerRun;
@@ -47,6 +48,7 @@ public class TimerFragment extends Fragment  {
         Circle1 = view.findViewById(R.id.circle_1);
         Circle2 = view.findViewById(R.id.circle_2);
         Circle3 = view.findViewById(R.id.circle_3);
+        workStatus = view.findViewById(R.id.workStatus);
 
         ButtonStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +91,7 @@ public class TimerFragment extends Fragment  {
 
             }
         }.start();
+        workStatus.setVisibility(view.VISIBLE);
         ButtonStartPause.setImageResource(R.drawable.ic_pause);
 
         timerRun = true;
@@ -113,8 +116,15 @@ public class TimerFragment extends Fragment  {
         timeLeft += seconds;
 
         textCountDown.setText(timeLeft);
+        if(timeToBreak){
+            workStatus.setText("Study hard!");
+        }
+        else {
+            workStatus.setText("Time to break!");
+        }
         if(timeLeft.equals("00:00") && session < totalSessions){
             breakTime();
+
         }
         else if(timeLeft.equals("00:00") && session == totalSessions){
             reset();
@@ -132,6 +142,7 @@ public class TimerFragment extends Fragment  {
         Circle2.setImageResource(R.drawable.ic_circle);
         Circle3.setImageResource(R.drawable.ic_circle);
         session = 0;
+        workStatus.setVisibility(view.GONE);
 
 
         if(timerRun) {
@@ -154,6 +165,7 @@ public class TimerFragment extends Fragment  {
 
     public void breakTime(){
         if(timeToBreak) {
+
             timeInMs = break_time;
             startTimer();
             session++;
@@ -174,7 +186,6 @@ public class TimerFragment extends Fragment  {
             else if(session == 4){
                 Circle3.setImageResource(R.drawable.ic_moon);
             }
-
 
             timeToBreak = false;
         }
