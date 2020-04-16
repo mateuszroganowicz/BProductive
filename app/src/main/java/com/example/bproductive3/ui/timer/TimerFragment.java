@@ -5,7 +5,6 @@ import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 
 import com.example.bproductive3.R;
 
@@ -95,7 +93,6 @@ public class TimerFragment extends Fragment  {
         ButtonStartPause.setImageResource(R.drawable.ic_pause);
 
         timerRun = true;
-
     }
 
     public void stopTimer(){
