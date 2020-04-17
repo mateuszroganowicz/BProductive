@@ -145,7 +145,7 @@ public class TimerFragment extends Fragment  {
         workStatus.setVisibility(view.GONE);
 
 
-        if(timerRun) {
+        if(timerRun){
             countDownTimer.cancel();
             timeInMs = start_time;
             ButtonStartPause.setImageResource(R.drawable.ic_play);

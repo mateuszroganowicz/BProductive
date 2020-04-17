@@ -1,19 +1,36 @@
 package com.example.bproductive3.ui.music;
 
+import android.Manifest;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.bproductive3.MainActivity;
 import com.example.bproductive3.R;
+
+import java.util.ArrayList;
 
 public class MusicFragment extends Fragment {
 
@@ -27,8 +44,30 @@ public class MusicFragment extends Fragment {
     private MediaPlayer mp;
     int totalTime;
 
+    private static final int MY_PERMISSION_REQUEST = 1;
+    ArrayList<String> arrayList;
+    ListView listView;
+    ArrayAdapter<String> adapter;
+    private static Context context=null;
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        context = getActivity();
+
+        if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)){
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSION_REQUEST);
+            }
+            else{
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSION_REQUEST);
+            }
+
+
+        }
+        else{
+            doStuff();
+        }
 
         View view = inflater.inflate(R.layout.fragment_music, container, false);
         mp = MediaPlayer.create(getActivity() , R.raw.music);
@@ -37,6 +76,7 @@ public class MusicFragment extends Fragment {
         volumeBar = view.findViewById(R.id.volume);
         currentTimeLabel = view.findViewById(R.id.currentTime);
         remainingTimeLabel = view.findViewById(R.id.remainingTime);
+        listView = view.findViewById(R.id.listView);
 
         mp.setLooping(true);
         mp.seekTo(0);
@@ -148,5 +188,57 @@ public class MusicFragment extends Fragment {
             mp.pause();
             playButton.setImageResource(R.drawable.ic_play);
         }
+    }
+
+    public void getMusic(){
+        ContentResolver contentResolver = getActivity().getContentResolver();
+        Uri songUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        Cursor songCursor = contentResolver.query(songUri, null, null, null, null);
+
+        if(songCursor != null && songCursor.moveToFirst()){
+            int songTitle = songCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
+            int songArtist = songCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
+
+            do{
+                String currentTitle = songCursor.getString(songTitle);
+                String currentArtist = songCursor.getString(songArtist);
+                arrayList.add(currentTitle + "\n" + currentArtist);
+            }while(songCursor.moveToNext());
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode){
+            case MY_PERMISSION_REQUEST: {
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                        Toast.makeText(getActivity(), "Permission granted!", Toast.LENGTH_SHORT).show();
+
+                        doStuff();
+                    }
+                }
+                else {
+                    Toast.makeText(getActivity(), "No permission!", Toast.LENGTH_SHORT).show();
+                    getActivity().finish();
+                }
+                return;
+            }
+        }
+    }
+
+    public void doStuff(){
+        arrayList = new ArrayList<>();
+        getMusic();
+        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, arrayList);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
     }
 }

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1066650188286",
+    "firebase_url": "https://bproductive-74a93.firebaseio.com",
+    "project_id": "bproductive-74a93",
+    "storage_bucket": "bproductive-74a93.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1066650188286:android:c0875c7696ad96350028af",
+        "android_client_info": {
+          "package_name": "com.example.bproductive3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1066650188286-u079h9g90k1c4ilavio9qrnb51nb4ejl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjKJZ5lQlR8HSJ7VWyU4p8P9yVOn0HXlg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1066650188286-u079h9g90k1c4ilavio9qrnb51nb4ejl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
