@@ -6,12 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.music.MusicFragment"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:weightSum="100">
 
     <ListView
-        android:id="@+id/listView"
+        android:layout_weight="90"
+        android:id="@+id/musicListView"
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="300dp" />
 
     <SeekBar
         android:id="@+id/musicTime"
@@ -27,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="0:00"
             android:layout_marginLeft="50dp"
-            />
+        />
 
         <TextView
             android:id="@+id/remainingTime"
@@ -35,7 +37,7 @@
             android:layout_height="wrap_content"
             android:text="-2:00"
             android:layout_marginLeft="250dp"
-            />
+        />
     </LinearLayout>
 
     <ImageButton
@@ -44,30 +46,6 @@
         android:layout_height="60dp"
         android:background="@drawable/rounded_button_timer"
         android:src="@drawable/ic_play"
-        android:layout_marginTop="30dp"
-
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="40dp"
-        android:gravity="center">
-        <ImageView
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:src="@drawable/sound"/>
-        <SeekBar
-            android:id="@+id/volume"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:progress="50"
-            android:max="100"
-            />
-        <ImageView
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:src="@drawable/sound2"/>
-    </LinearLayout>
+        android:layout_marginBottom="70dp"
+    />
 </LinearLayout>
