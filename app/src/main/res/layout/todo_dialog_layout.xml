@@ -28,7 +28,7 @@
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Task Description"
+        android:hint="Task Description (max. 30 chars)"
         android:textAlignment="center"
         android:inputType="textPersonName"
         android:text=""

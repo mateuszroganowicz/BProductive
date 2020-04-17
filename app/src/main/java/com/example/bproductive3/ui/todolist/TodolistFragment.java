@@ -26,12 +26,12 @@ public class TodolistFragment extends Fragment
     private TodoDAO dao;
     private ArrayAdapter<String> adapter;
     private ListView taskList;
-
+    private TodolistAdapter listAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View root = inflater.inflate(R.layout.fragment_todolist, container, false);
-        View todoList_row = inflater.inflate(R.layout.todolist_row, container, false);
+        View todoList_row = inflater.inflate(R.layout.todolist_row, null);
 
         dao = new TodoDAO(getActivity());
         taskList = (ListView)root.findViewById(R.id.TaskList);
@@ -39,49 +39,6 @@ public class TodolistFragment extends Fragment
 
         ImageButton addTodoButton = root.findViewById(R.id.addTaskButton);
         Button deleteTodoButton = todoList_row.findViewById(R.id.deleteButton);
-
-        addTodoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
-                View mView = getLayoutInflater().inflate(R.layout.todo_dialog_layout, null);
-
-                final EditText taskDescription = mView.findViewById(R.id.taskDesc);
-                Button addButton = mView.findViewById(R.id.add_button);
-                Button cancelButton = mView.findViewById(R.id.cancel_button);
-
-                addButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        if(!taskDescription.getText().toString().isEmpty()) // == false
-                        {
-                            String task = String.valueOf(taskDescription.getText());
-                            dao.insertTodo(task);
-                            loadTaskList();
-                            Toast.makeText(getActivity(), "Task added", Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                            Toast.makeText(getActivity(), "Task description field is empty!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-                mBuilder.setView(mView);
-                final AlertDialog dialog = mBuilder.create();
-                dialog.show();
-
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        dialog.dismiss();
-                    }
-                });
-            }
-        });
 
         deleteTodoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +54,50 @@ public class TodolistFragment extends Fragment
             }
         });
 
+        addTodoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
+                View mView = getLayoutInflater().inflate(R.layout.todo_dialog_layout, null);
+
+                final EditText taskDescription = mView.findViewById(R.id.taskDesc);
+                Button addButton = mView.findViewById(R.id.add_button);
+                Button cancelButton = mView.findViewById(R.id.cancel_button);
+
+                mBuilder.setView(mView);
+                final AlertDialog dialog = mBuilder.create();
+                dialog.show();
+
+                addButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        if(!taskDescription.getText().toString().isEmpty()) // == false
+                        {
+                            String task = String.valueOf(taskDescription.getText());
+                            dao.insertTodo(task);
+                            loadTaskList();
+                            Toast.makeText(getActivity(), "Task added", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }
+                        else
+                        {
+                            Toast.makeText(getActivity(), "Task description field is empty!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
         return root;
     }
 
