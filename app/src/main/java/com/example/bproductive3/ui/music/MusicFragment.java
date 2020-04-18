@@ -2,14 +2,11 @@ package com.example.bproductive3.ui.music;
 
 import android.Manifest;
 import android.content.ContentResolver;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
@@ -31,7 +28,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.bproductive3.R;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MusicFragment extends Fragment
@@ -62,9 +58,6 @@ public class MusicFragment extends Fragment
         listView = view.findViewById(R.id.musicListView);
         //mp = MediaPlayer.create(getActivity(), MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
 
-
-
-
         //Permissions
         if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
         {
@@ -81,8 +74,6 @@ public class MusicFragment extends Fragment
         {
             doStuff();
         }
-
-
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,11 +204,10 @@ public class MusicFragment extends Fragment
                     Toast.makeText(getActivity(), "No permission!", Toast.LENGTH_SHORT).show();
                     getActivity().finish();
                 }
-                break; //was return
+                break;
             }
         }
     }
-
 
      public void doStuff()
      {
@@ -227,7 +217,7 @@ public class MusicFragment extends Fragment
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-       {
+        {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
@@ -251,6 +241,4 @@ public class MusicFragment extends Fragment
             }
         });
     }
-
-
 }
