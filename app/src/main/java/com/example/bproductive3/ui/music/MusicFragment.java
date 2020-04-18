@@ -2,11 +2,14 @@ package com.example.bproductive3.ui.music;
 
 import android.Manifest;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
@@ -28,6 +31,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.bproductive3.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MusicFragment extends Fragment
@@ -42,7 +46,8 @@ public class MusicFragment extends Fragment
 
     private static final int MY_PERMISSION_REQUEST = 1;
     ArrayList<String> songsList;
-    ListView listView;
+    private String songNames[];
+    private ListView listView;
     ArrayAdapter<String> adapter;
 
 
@@ -55,8 +60,10 @@ public class MusicFragment extends Fragment
         currentTimeLabel = view.findViewById(R.id.currentTime);
         remainingTimeLabel = view.findViewById(R.id.remainingTime);
         listView = view.findViewById(R.id.musicListView);
+        //mp = MediaPlayer.create(getActivity(), MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
 
-        mp = MediaPlayer.create(getActivity() , R.raw.music);
+
+
 
         //Permissions
         if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
@@ -75,11 +82,7 @@ public class MusicFragment extends Fragment
             doStuff();
         }
 
-        mp.setLooping(true);
-        mp.seekTo(0);
-        totalTime = mp.getDuration();
 
-        positionBar.setMax(totalTime);
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,12 +181,14 @@ public class MusicFragment extends Fragment
         {
             int songTitle = songCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
             int songArtist = songCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
+            int songLocation = songCursor.getColumnIndex(MediaStore.Audio.Media.DATA);
 
             do
             {
                 String currentTitle = songCursor.getString(songTitle);
                 String currentArtist = songCursor.getString(songArtist);
-                songsList.add(currentTitle + "\n" + currentArtist);
+                String currentLocation = songCursor.getString(songLocation);
+                songsList.add(currentTitle + "\n" + currentArtist + currentLocation);
             }
             while(songCursor.moveToNext());
         }
@@ -213,20 +218,39 @@ public class MusicFragment extends Fragment
         }
     }
 
-    public void doStuff()
-    {
+
+     public void doStuff()
+     {
         songsList = new ArrayList<>();
         getMusic();
         adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, songsList);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+       {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
+               // mp = MediaPlayer.create(getActivity(), Uri.parse(songsList.get(position).toString()));
+                mp = MediaPlayer.create(getActivity(), MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+
+                //mp jest NULL
+                System.out.println("mp:" + mp);
+                totalTime = mp.getDuration();
+                positionBar.setMax(totalTime);
+
+                if(mp != null && !mp.isPlaying()){
+                    mp.start();
+                    playButton.setImageResource(R.drawable.ic_pause);
+                }
+                else {
+                    mp.pause();
+                    playButton.setImageResource(R.drawable.ic_play);
+                }
 
             }
         });
     }
+
+
 }
