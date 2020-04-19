@@ -11,7 +11,7 @@
         android:text="Task description"
         android:padding="10dp"
         android:textSize="20sp"
-        android:maxLength="40"
+        android:maxLength="35"
     />
 
     <TextView

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,7 +24,6 @@ import java.util.ArrayList;
 public class TodolistFragment extends Fragment
 {
     private TodoDAO dao;
-    private ArrayAdapter<String> adapter;
     private ListView lv_taskList;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -44,9 +44,9 @@ public class TodolistFragment extends Fragment
                 View mView = getLayoutInflater().inflate(R.layout.todo_dialog_layout, null);
 
                 final EditText taskDescription = mView.findViewById(R.id.taskDesc);
-                final EditText taskPriority = mView.findViewById(R.id.taskPrior);
                 Button addButton = mView.findViewById(R.id.add_button);
                 Button cancelButton = mView.findViewById(R.id.cancel_button);
+                final RadioGroup priorityRadio = mView.findViewById(R.id.priorityRadioGroup);
 
                 mBuilder.setView(mView);
                 final AlertDialog dialog = mBuilder.create();
@@ -56,32 +56,45 @@ public class TodolistFragment extends Fragment
                     @Override
                     public void onClick(View v)
                     {
-                        if(!taskDescription.getText().toString().isEmpty() && !taskPriority.getText().toString().isEmpty()) // == false
+                        if(!taskDescription.getText().toString().isEmpty() ) // == false
                         {
-                            if(taskPriority.getText().toString().equals("1") ||  taskPriority.getText().toString().equals("2") || taskPriority.getText().toString().equals("3"))
+                            try
                             {
-                                try
+                                int checkedBtt = priorityRadio.getCheckedRadioButtonId();
+                                switch(checkedBtt)
                                 {
-                                    Task task = new Task(-1, taskDescription.getText().toString(), Integer.parseInt(taskPriority.getText().toString()));
-                                    dao.insertTodo(task);
-                                    Toast.makeText(getActivity(), "Task: " + task.getName() + " added successfully", Toast.LENGTH_SHORT).show();
-                                    dialog.dismiss();
-                                }
-                                catch(Exception e)
-                                {
-                                    Toast.makeText(getActivity(), "Something went wrong when adding a task!", Toast.LENGTH_SHORT).show();
-                                    dialog.dismiss();
+                                    case 1:
+                                        Task task1 = new Task(-1, taskDescription.getText().toString(), 1);
+                                        dao.insertTodo(task1);
+                                        Toast.makeText(getActivity(), "Task: " + task1.getName() + " added successfully", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                        break;
+                                    case 2:
+                                        Task task2 = new Task(-1, taskDescription.getText().toString(), 2);
+                                        dao.insertTodo(task2);
+                                        Toast.makeText(getActivity(), "Task: " + task2.getName() + " added successfully", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                        break;
+                                    case 3:
+                                        Task task3 = new Task(-1, taskDescription.getText().toString(), 3);
+                                        dao.insertTodo(task3);
+                                        Toast.makeText(getActivity(), "Task: " + task3.getName() + " added successfully", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                        break;
+                                    case -1:
+                                        Toast.makeText(getActivity(), "Select task priority!", Toast.LENGTH_SHORT).show();
                                 }
                             }
-                            else
+                            catch(Exception e)
                             {
-                                Toast.makeText(getActivity(), "Priority value has to be between range 1-3!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Something went wrong when adding a task!", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
                             }
                             loadTaskList();
                         }
                         else
                         {
-                            Toast.makeText(getActivity(), "Task description or priority field is empty!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Task description field is empty!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
