@@ -1,6 +1,8 @@
 package com.example.bproductive3;
 
 
+import android.media.MediaMetadata;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,11 +36,12 @@ public class PlayerActivity extends AppCompatActivity {
     int totalTime;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         Util.onActivityCreateSetTheme(this);
-        setContentView(R.layout.fragment_music);
+        setContentView(R.layout.player_activity);
 
         play = findViewById(R.id.playmusic_button);
         nextSong = findViewById(R.id.next_song_button);
@@ -55,6 +58,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         bundle = getIntent().getExtras();
 
+
         songs = (ArrayList) bundle.getParcelableArrayList("list");
         position = bundle.getInt("position");
 
@@ -62,6 +66,7 @@ public class PlayerActivity extends AppCompatActivity {
         mp = MediaPlayer.create(this, uri);
         totalTime = mp.getDuration();
         positionBar.setMax(totalTime);
+
         playMusic();
 
 

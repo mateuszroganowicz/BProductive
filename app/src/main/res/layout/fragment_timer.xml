@@ -71,7 +71,7 @@
                 android:width="300dp"
                 android:height="200dp"
                 android:gravity="center"
-                android:text="40:00"
+                android:text="00:00"
                 android:textSize="60dp" />
 
         </LinearLayout>

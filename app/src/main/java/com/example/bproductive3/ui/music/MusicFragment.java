@@ -1,11 +1,16 @@
 package com.example.bproductive3.ui.music;
 
 
+import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +23,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.bproductive3.PlayerActivity;
@@ -26,31 +33,22 @@ import com.example.bproductive3.R;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
+
 import android.os.Handler;
 
 public class MusicFragment extends Fragment
 {
 
-    private Button nextSong, prevSong;
-    private ImageButton play;
-    static private MediaPlayer mp;
-    private Runnable runnable;
-    private SeekBar positionBar;
-    private TextView currentTimeLabel;
-    private TextView remainingTimeLabel;
     private String songNames[];
     private ListView listView;
-    ArrayAdapter<String> adapter;
-    int totalTime;
-    private Handler handler;
-    int currentSong;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_music, container, false);
+
+
         listView = view.findViewById(R.id.musicListView);
-
-
 
         final ArrayList<File> songs = readSongs(Environment.getExternalStorageDirectory());
         songNames = new String[songs.size()];
@@ -68,6 +66,7 @@ public class MusicFragment extends Fragment
                 startActivity(new Intent(getActivity(), PlayerActivity.class).putExtra("position", position).putExtra("list", songs));
             }
         });
+
 
 
         return view;
@@ -91,6 +90,7 @@ public class MusicFragment extends Fragment
         }
         return arrayList;
     }
+
 
 
 
