@@ -5,14 +5,23 @@
     android:descendantFocusability="blocksDescendants">
 
     <TextView
-        android:id="@+id/taskTitle"
+        android:id="@+id/row_taskTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Task description"
-        android:padding="20dp"
+        android:padding="10dp"
         android:textSize="20sp"
-        android:backgroundTint="@color/normalSecondary"
-        android:maxLength="35"
+        android:maxLength="40"
     />
+
+    <TextView
+        android:id="@+id/row_taskPrior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/row_taskTitle"
+        android:maxLength="35"
+        android:padding="5dp"
+        android:text="Task priority"
+        android:textSize="12sp" />
 
 </RelativeLayout>

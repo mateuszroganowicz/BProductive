@@ -58,22 +58,26 @@ public class TodolistFragment extends Fragment
                     {
                         if(!taskDescription.getText().toString().isEmpty() && !taskPriority.getText().toString().isEmpty()) // == false
                         {
-                            try
+                            if(taskPriority.getText().toString().equals("1") ||  taskPriority.getText().toString().equals("2") || taskPriority.getText().toString().equals("3"))
                             {
-                                Task task = new Task(-1, taskDescription.getText().toString(), Integer.parseInt(taskPriority.getText().toString()));
-                                dao.insertTodo(task);
-                                loadTaskList();
-                                Toast.makeText(getActivity(), "Task: " + task.getName() + " added successfully", Toast.LENGTH_SHORT).show();
+                                try
+                                {
+                                    Task task = new Task(-1, taskDescription.getText().toString(), Integer.parseInt(taskPriority.getText().toString()));
+                                    dao.insertTodo(task);
+                                    Toast.makeText(getActivity(), "Task: " + task.getName() + " added successfully", Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                }
+                                catch(Exception e)
+                                {
+                                    Toast.makeText(getActivity(), "Something went wrong when adding a task!", Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                }
                             }
-                            catch(Exception e)
+                            else
                             {
-                                Task task = new Task(-1, "Error", -1);
-                                dao.insertTodo(task);
-                                loadTaskList();
-                                Toast.makeText(getActivity(), "Something went wrong when adding a task!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Priority value has to be between range 1-3!", Toast.LENGTH_SHORT).show();
                             }
                             loadTaskList();
-                            dialog.dismiss();
                         }
                         else
                         {
@@ -137,7 +141,7 @@ public class TodolistFragment extends Fragment
         dao = new TodoDAO(getActivity());
         ArrayList<Task> tasks = dao.getTasks();
 
-        ArrayAdapter adapter = new ArrayAdapter<Task>(getActivity(), android.R.layout.simple_list_item_1, tasks);
+        ArrayAdapter adapter = new ToDoListAdapter(getActivity(), R.layout.todolist_row, tasks);
         lv_taskList.setAdapter(adapter);
     }
 }

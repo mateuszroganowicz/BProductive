@@ -69,7 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="Priority (1-4)"
+        android:hint="Priority (1-3)"
         android:textAlignment="center"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
@@ -77,6 +77,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskDesc"
         app:layout_constraintVertical_bias="0.0" />
+
+<!--    <RadioGroup-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/taskDesc"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/taskPrior"-->
+<!--        app:layout_constraintVertical_bias="0.0">-->
+
+<!--        <RadioButton-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="High"-->
+<!--            android:textColor="#D2222D"-->
+<!--            />-->
+
+<!--        <RadioButton-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Medium"-->
+<!--            android:textColor="#FFBF00"/>-->
+
+<!--        <RadioButton-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Low"-->
+<!--            android:textColor="#238823"-->
+<!--            />-->
+
+<!--    </RadioGroup>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
