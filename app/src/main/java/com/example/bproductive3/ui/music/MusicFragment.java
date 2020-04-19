@@ -1,104 +1,127 @@
 package com.example.bproductive3.ui.music;
 
-import android.Manifest;
-import android.content.ContentResolver;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.media.AudioManager;
+
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.bproductive3.R;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import android.os.Handler;
 
 public class MusicFragment extends Fragment
 {
-    private MusicViewModel musicViewModel;
-    private ImageButton playButton;
+
+    private Button nextSong, prevSong;
+    private ImageButton play;
+    static private MediaPlayer mp;
+    private Runnable runnable;
     private SeekBar positionBar;
     private TextView currentTimeLabel;
     private TextView remainingTimeLabel;
-    private MediaPlayer mp;
-    int totalTime;
-
-    private static final int MY_PERMISSION_REQUEST = 1;
-    ArrayList<String> songsList;
     private String songNames[];
     private ListView listView;
     ArrayAdapter<String> adapter;
+    int totalTime;
+    private Handler handler;
 
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_music, container, false);
-
-        playButton = view.findViewById(R.id.playmusic_button);
+        listView = view.findViewById(R.id.musicListView);
+        play = view.findViewById(R.id.playmusic_button);
+        nextSong = view.findViewById(R.id.next_song_button);
+        prevSong = view.findViewById(R.id.previous_song_button);
         positionBar = view.findViewById(R.id.musicTime);
         currentTimeLabel = view.findViewById(R.id.currentTime);
         remainingTimeLabel = view.findViewById(R.id.remainingTime);
-        listView = view.findViewById(R.id.musicListView);
-        //mp = MediaPlayer.create(getActivity(), MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+        handler = new Handler();
 
+        final ArrayList<File> songs = readSongs(Environment.getExternalStorageDirectory());
+        songNames = new String[songs.size()];
 
-
-
-        //Permissions
-        if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-        {
-            if(ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE))
-            {
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSION_REQUEST);
-            }
-            else
-            {
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSION_REQUEST);
-            }
-        }
-        else
-        {
-            doStuff();
+        for(int i = 0;  i < songs.size(); ++i){
+            songNames[i] = songs.get(i).getName().toString().replace(".mp3", "");
         }
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.song_layout, R.id.songView, songNames);
+        listView.setAdapter(adapter);
 
-
-        playButton.setOnClickListener(new View.OnClickListener() {
+        play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                playMusic();
+                if(mp != null){
+                    playMusic();
+                }
+
+
             }
         });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(mp != null){
+                    mp.stop();
+                    mp.release();
+                }
+
+                Uri uri = Uri.parse(songs.get(position).toString());
+                mp = MediaPlayer.create(getActivity(), uri);
+                totalTime = mp.getDuration();
+                //System.out.println("total" + totalTime);
+                positionBar.setMax(totalTime);
+                playMusic();
+
+                System.out.println("songs size: " + songs.size());
+                System.out.println("position: " + position);
+
+
+                //TO NIE DZIALA :////
+                /*if(mp.getCurrentPosition() == totalTime){
+                    position++;
+                    mp.stop();
+                    mp.release();
+                    for(int i = position; i < songs.size(); i++){
+                        uri = Uri.parse(songs.get(position).toString());
+                        mp = MediaPlayer.create(getActivity(), uri);
+                        playMusic();
+                    }
+                }*/
+
+
+
+            }
+
+        });
+
+
+
 
         positionBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if(fromUser){
-                   mp.seekTo(progress);
-                   positionBar.setProgress(progress);
+                    mp.seekTo(progress);
+                    positionBar.setProgress(progress);
                 }
-
             }
 
             @Override
@@ -112,39 +135,50 @@ public class MusicFragment extends Fragment
             }
         });
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(mp != null){
-                   try {
-                       Message msg = new Message();
-                       msg.what = mp.getCurrentPosition();
-                       handler.sendMessage(msg);
-                       Thread.sleep(1000);
-                   }catch (InterruptedException e){}
-                }
-            }
-        }).start();
-
         return view;
+
     }
 
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            int currentPosition = msg.what;
-            positionBar.setProgress(currentPosition);
-            String currentTime = createTimeLabel(currentPosition);
 
-            currentTimeLabel.setText(currentTime);
+    private ArrayList<File> readSongs(File root){
+        ArrayList<File> arrayList = new ArrayList<File>();
+        File files[] = root.listFiles();
 
-            String remainingTime = createTimeLabel(totalTime - currentPosition);
-            remainingTimeLabel.setText("-" + remainingTime);
-
+        for(File file : files){
+            if(file.isDirectory()){
+                arrayList.addAll(readSongs(file));
+            }
+            else {
+                if(file.getName().endsWith(".mp3")){
+                    arrayList.add(file);
+                }
+            }
         }
+        return arrayList;
+    }
+
+    private void updateSeekBar(){
+        positionBar.setProgress(mp.getCurrentPosition());
+        String currentTime = createTimeLabel(mp.getCurrentPosition());
+
+        currentTimeLabel.setText(currentTime);
+
+        String remainingTime = createTimeLabel(totalTime - mp.getCurrentPosition());
+        remainingTimeLabel.setText("-" + remainingTime);
 
 
-    };
+        if(mp.isPlaying()){
+            runnable = new Runnable() {
+                @Override
+                public void run() {
+                    updateSeekBar();
+                }
+
+            };
+            handler.postDelayed(runnable, 1000);
+        }
+    }
+
 
     public String createTimeLabel(int time){
         String timeLabel = "";
@@ -160,97 +194,23 @@ public class MusicFragment extends Fragment
         return timeLabel;
     }
 
+
+
     public void playMusic(){
-        if(!mp.isPlaying()){
+        if(!mp.isPlaying() && mp != null){
             mp.start();
-            playButton.setImageResource(R.drawable.ic_pause);
+            play.setImageResource(R.drawable.ic_pause);
+            updateSeekBar();
+
         }
         else {
             mp.pause();
-            playButton.setImageResource(R.drawable.ic_play);
+            play.setImageResource(R.drawable.ic_play);
+            updateSeekBar();
+
         }
     }
 
-    public void getMusic()
-    {
-        ContentResolver contentResolver = getActivity().getContentResolver();
-        Uri songUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        Cursor songCursor = contentResolver.query(songUri, null, null, null, null);
-
-        if(songCursor != null && songCursor.moveToFirst())
-        {
-            int songTitle = songCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
-            int songArtist = songCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
-            int songLocation = songCursor.getColumnIndex(MediaStore.Audio.Media.DATA);
-
-            do
-            {
-                String currentTitle = songCursor.getString(songTitle);
-                String currentArtist = songCursor.getString(songArtist);
-                String currentLocation = songCursor.getString(songLocation);
-                songsList.add(currentTitle + "\n" + currentArtist + currentLocation);
-            }
-            while(songCursor.moveToNext());
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode)
-        {
-            case MY_PERMISSION_REQUEST:
-                {
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                {
-                    if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
-                    {
-                        Toast.makeText(getActivity(), "Permission granted!", Toast.LENGTH_SHORT).show();
-                        doStuff();
-                    }
-                }
-                else
-                {
-                    Toast.makeText(getActivity(), "No permission!", Toast.LENGTH_SHORT).show();
-                    getActivity().finish();
-                }
-                break; //was return
-            }
-        }
-    }
-
-
-     public void doStuff()
-     {
-        songsList = new ArrayList<>();
-        getMusic();
-        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, songsList);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-       {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-               // mp = MediaPlayer.create(getActivity(), Uri.parse(songsList.get(position).toString()));
-                mp = MediaPlayer.create(getActivity(), MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
-
-                //mp jest NULL
-                System.out.println("mp:" + mp);
-                totalTime = mp.getDuration();
-                positionBar.setMax(totalTime);
-
-                if(mp != null && !mp.isPlaying()){
-                    mp.start();
-                    playButton.setImageResource(R.drawable.ic_pause);
-                }
-                else {
-                    mp.pause();
-                    playButton.setImageResource(R.drawable.ic_play);
-                }
-
-            }
-        });
-    }
 
 
 }
