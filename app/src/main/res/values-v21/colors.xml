@@ -6,12 +6,12 @@
 
     <!-- color palette sad theme-->
     <color name="sadPrimary">#28484C</color>
-    <color name="sadSecondary">#4C6C70</color>
+    <color name="sadSecondary">#97B0B3</color>
     <color name="sadText">#202040</color>
 
     <!-- color palette confident theme-->
-    <color name="confidentPrimary">#3C6E25</color>
-    <color name="confidentSecondary">#b1c5a7</color>
+    <color name="confidentPrimary">#216521</color>
+    <color name="confidentSecondary">#f0f7da</color>
     <color name="confidentText">#272727</color>
 
     <!-- color palette stressed theme-->
@@ -27,7 +27,7 @@
 
     <!-- color palette angry theme-->
     <color name="angryPrimary">#C82121</color>
-    <color name="angrySecondary">#ff6363</color>
+    <color name="angrySecondary">#FBADAD</color>
     <color name="angryText">#dee1ec</color>
 
     <!-- color palette happy theme-->

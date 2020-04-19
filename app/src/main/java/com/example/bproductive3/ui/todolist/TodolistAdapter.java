@@ -5,11 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.bproductive3.R;
+
 import java.util.ArrayList;
 
 public class TodolistAdapter extends ArrayAdapter<String>
@@ -28,15 +27,15 @@ public class TodolistAdapter extends ArrayAdapter<String>
 
         String taskItem = getItem(position);
         TextView taskDesc = listRowView.findViewById(R.id.taskTitle);
-        Button deleteBtt = listRowView.findViewById(R.id.deleteButton);
+        //Button deleteBtt = listRowView.findViewById(R.id.deleteButton);
 
-        deleteBtt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                Toast.makeText(view.getContext(), "Task deleted", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        deleteBtt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view)
+//            {
+//                Toast.makeText(view.getContext(), "Task deleted", Toast.LENGTH_SHORT).show();
+//            }
+//        });
         return  listRowView;
     }
 }

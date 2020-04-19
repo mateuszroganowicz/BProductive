@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,22 +36,42 @@ public class TodolistFragment extends Fragment
 
         dao = new TodoDAO(getActivity());
         taskList = (ListView)root.findViewById(R.id.TaskList);
+        ImageButton addTodoButton = root.findViewById(R.id.addTaskButton);
         loadTaskList();
 
-        ImageButton addTodoButton = root.findViewById(R.id.addTaskButton);
-        Button deleteTodoButton = todoList_row.findViewById(R.id.deleteButton);
-
-        deleteTodoButton.setOnClickListener(new View.OnClickListener() {
+        taskList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v)
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                Toast.makeText(getActivity(), "Task deleted", Toast.LENGTH_SHORT).show();
-                View parent = (View)v.getParent();
-                TextView taskTextView = parent.findViewById(R.id.taskTitle);
-                String task = String.valueOf(taskTextView.getText());
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
+                View mView = getLayoutInflater().inflate(R.layout.todo_delete_dialog, null);
+                Button deleteBttnYes = mView.findViewById(R.id.buttonDeleteYes);
+                Button deleteBttnNo = mView.findViewById(R.id.buttonDeleteNo);
 
-                dao.deleteTodo(task);
-                loadTaskList();
+                mBuilder.setView(mView);
+                final AlertDialog dialog = mBuilder.create();
+                dialog.show();
+
+                deleteBttnNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        dialog.dismiss();
+                    }
+                });
+
+                deleteBttnYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        View mView = getLayoutInflater().inflate(R.layout.todolist_row, null);
+                        TextView taskTextView = mView.findViewById(R.id.taskTitle);
+                        String task = String.valueOf(taskTextView.getText());
+                        dao.deleteTodo(task);
+                        loadTaskList();
+                        Toast.makeText(getActivity(), "Task Deleted", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
