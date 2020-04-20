@@ -81,8 +81,7 @@ public class TodolistFragment extends Fragment
                                 else
                                 {
                                     dao.insertTodo(task);
-                                    //Toast.makeText(getActivity(), "Task: " + task.getName() + " added successfully", Toast.LENGTH_SHORT).show();
-                                    Toast.makeText(getActivity(), "CheckedBtt: " + checkedBtt, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Task: " + task.getName() + " added successfully", Toast.LENGTH_SHORT).show();
                                     checkedBtt = 0;
                                     dialog.dismiss();
                                 }
