@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_height="350dp">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textView2"
@@ -91,26 +91,27 @@
 
         <RadioButton
             android:id="@+id/radio_low"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Low"
             android:textColor="#238823"
-            android:layout_marginLeft="80dp"/>
+            android:layout_marginEnd="10dp"/>
 
         <RadioButton
             android:id="@+id/radio_med"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Medium"
-            android:textColor="#FFBF00" />
+            android:textColor="#FFBF00"
+            android:layout_marginEnd="10dp"/>
 
         <RadioButton
             android:id="@+id/radio_high"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="High"
             android:textColor="#D2222D"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginEnd="10dp"/>
 
     </RadioGroup>
 

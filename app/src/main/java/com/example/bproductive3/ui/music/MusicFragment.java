@@ -1,41 +1,25 @@
 package com.example.bproductive3.ui.music;
 
 
-import android.Manifest;
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.SeekBar;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.bproductive3.PlayerActivity;
 import com.example.bproductive3.R;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
-
-import android.os.Handler;
 
 public class MusicFragment extends Fragment
 {
@@ -66,33 +50,32 @@ public class MusicFragment extends Fragment
                 startActivity(new Intent(getActivity(), PlayerActivity.class).putExtra("position", position).putExtra("list", songs));
             }
         });
-
-
-
         return view;
-
     }
 
 
-    private ArrayList<File> readSongs(File root){
+    private ArrayList<File> readSongs(File root)
+    {
         ArrayList<File> arrayList = new ArrayList<File>();
         File files[] = root.listFiles();
 
-        for(File file : files){
-            if(file.isDirectory()){
-                arrayList.addAll(readSongs(file));
-            }
-            else {
-                if(file.getName().endsWith(".mp3")){
-                    arrayList.add(file);
+        try
+        {
+            for(File file : files){
+                if(file.isDirectory()){
+                    arrayList.addAll(readSongs(file));
+                }
+                else {
+                    if(file.getName().endsWith(".mp3")){
+                        arrayList.add(file);
+                    }
                 }
             }
         }
+        catch (Exception e)
+        {
+            Toast.makeText(getActivity(), "No songs found in memory!", Toast.LENGTH_SHORT).show();
+        }
         return arrayList;
     }
-
-
-
-
-
 }
