@@ -1,5 +1,6 @@
 package com.example.bproductive3.ui.timer;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -17,9 +18,11 @@ import com.example.bproductive3.R;
 
 public class TimerFragment extends Fragment  {
 
+
     private final static long start_time = 6000; //In milliseconds
     private final static long break_time = 16000; //In milliseconds
-    private long timeInMs = start_time;
+    private long timeInMs;
+
     private TextView textCountDown;
     private ImageButton ButtonStartPause;
     private ImageButton ButtonRestart;
@@ -28,16 +31,32 @@ public class TimerFragment extends Fragment  {
     private ImageView Circle2;
     private ImageView Circle3;
     private TextView workStatus;
-
+    private MediaPlayer mp;
     private CountDownTimer countDownTimer;
     private boolean timerRun;
     private boolean timeToBreak = true;
-    private int session = 0;
+    private int session;
     private int totalSessions = 4;
     View view;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState == null){
+            timeInMs = start_time;
+            session = 0;
+        }
+        else {
+            timeInMs = savedInstanceState.getLong("myKey");
+            session = savedInstanceState.getInt("session");
+        }
+
+
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_timer, container, false);
+
 
         textCountDown = view.findViewById(R.id.countdown_text);
         ButtonStartPause = view.findViewById(R.id.button_start);
@@ -47,6 +66,9 @@ public class TimerFragment extends Fragment  {
         Circle2 = view.findViewById(R.id.circle_2);
         Circle3 = view.findViewById(R.id.circle_3);
         workStatus = view.findViewById(R.id.workStatus);
+
+        mp = MediaPlayer.create(getActivity(), R.raw.accomplished);
+
 
         ButtonStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,10 +100,13 @@ public class TimerFragment extends Fragment  {
 
     public void startTimer(){
         countDownTimer = new CountDownTimer(timeInMs, 1000) {
+
             @Override
             public void onTick(long millisUntilFinished) {
-                timeInMs = millisUntilFinished;
-                updateTimer();
+                    timeInMs = millisUntilFinished;
+                    updateTimer();
+
+
             }
 
             @Override
@@ -120,6 +145,7 @@ public class TimerFragment extends Fragment  {
             workStatus.setText("Time to break!");
         }
         if(timeLeft.equals("00:00") && session < totalSessions){
+            playSound();
             breakTime();
 
         }
@@ -193,5 +219,11 @@ public class TimerFragment extends Fragment  {
         }
 
     }
+
+    public void playSound(){
+
+        mp.start();
+    }
+
 
 }
