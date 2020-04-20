@@ -142,7 +142,7 @@ public class TimerFragment extends Fragment  {
             workStatus.setText("Study hard!");
         }
         else {
-            workStatus.setText("Time to break!");
+            workStatus.setText("Time for a break!");
         }
         if(timeLeft.equals("00:00") && session < totalSessions){
             playSound();
