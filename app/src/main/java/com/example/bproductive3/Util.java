@@ -2,18 +2,16 @@ package com.example.bproductive3;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.view.View;
 
 public class Util
 {
     private static int sTheme;
-    public final static int THEME_HAPPY = 0;
+    public final static int THEME_NORMAL = 0;
     public final static int THEME_SAD = 1;
     public final static int THEME_ANGRY = 2;
     public final static int THEME_CONFIDENT = 3;
-    public final static int THEME_NORMAL = 4;
+    public final static int THEME_HAPPY = 4;
     public final static int THEME_STRESSED = 5;
-
 
     public static void changeToTheme(Activity activity, int theme)
     {

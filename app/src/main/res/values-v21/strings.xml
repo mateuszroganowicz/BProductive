@@ -6,4 +6,14 @@
     <string name="title_todo">To do list</string>
     <string name="title_appinfo">AppInfo</string>
     <string name="mood_header">What is your mood today?</string>
+
+    <string name="app_version">BProductive ver: 0.1</string>
+    <string name="authors1">Made by: Jakub Sztompka 100731</string>
+    <string name="authors2">Mateusz Roganowicz 96947</string>
+    <string name="about">App was designed and implemented for the ICM course at the University of Aveiro (2020)</string>
+    <string name="reference1">All icons were downloaded from https://www.flaticon.com/</string>
+    <string name="reference2">SVG icon authors:</string>
+    <string name="reference3">https://www.flaticon.com/authors/roundicons</string>
+    <string name="reference4">https://www.flaticon.com/authors/freepik</string>
+
 </resources>
