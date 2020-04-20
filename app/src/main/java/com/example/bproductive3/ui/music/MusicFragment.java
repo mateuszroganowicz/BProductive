@@ -1,6 +1,7 @@
 package com.example.bproductive3.ui.music;
 
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -17,6 +18,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.bproductive3.PlayerActivity;
 import com.example.bproductive3.R;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -33,6 +40,7 @@ public class MusicFragment extends Fragment
 
 
         listView = view.findViewById(R.id.musicListView);
+         runtimePermission();
 
         final ArrayList<File> songs = readSongs(Environment.getExternalStorageDirectory());
         songNames = new String[songs.size()];
@@ -50,7 +58,30 @@ public class MusicFragment extends Fragment
                 startActivity(new Intent(getActivity(), PlayerActivity.class).putExtra("position", position).putExtra("list", songs));
             }
         });
+
+
         return view;
+    }
+
+    public void runtimePermission(){
+        Dexter.withContext(getActivity())
+                .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                        permissionToken.continuePermissionRequest();
+                    }
+                }).check();
     }
 
 

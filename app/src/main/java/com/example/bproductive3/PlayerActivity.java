@@ -94,6 +94,7 @@ public class PlayerActivity extends AppCompatActivity {
                 mp.release();
                 Uri uri = Uri.parse(songs.get(position).toString());
                 mp = MediaPlayer.create(PlayerActivity.this, uri);
+                play.setImageResource(R.drawable.ic_pause);
                 totalTime = mp.getDuration();
                 positionBar.setMax(totalTime);
                 mp.start();
@@ -103,8 +104,8 @@ public class PlayerActivity extends AppCompatActivity {
         prevSong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(position < songs.size() - 1){
-                    position--;
+                if(position == 0){
+                    position = songs.size()-1;
                 }
                 else{
                     position = 0;
@@ -113,6 +114,7 @@ public class PlayerActivity extends AppCompatActivity {
                 mp.release();
                 Uri uri = Uri.parse(songs.get(position).toString());
                 mp = MediaPlayer.create(PlayerActivity.this, uri);
+                play.setImageResource(R.drawable.ic_pause);
                 totalTime = mp.getDuration();
                 positionBar.setMax(totalTime);
                 mp.start();
