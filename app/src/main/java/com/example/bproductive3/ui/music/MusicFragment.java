@@ -52,10 +52,13 @@ public class MusicFragment extends Fragment
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.song_layout, R.id.songView, songNames);
         listView.setAdapter(adapter);
 
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(getActivity(), PlayerActivity.class).putExtra("position", position).putExtra("list", songs));
+                String songName = listView.getItemAtPosition(position).toString();
+                startActivity(new Intent(getActivity(), PlayerActivity.class).putExtra("position", position).putExtra("list", songs).putExtra("SongName", songName));
             }
         });
 

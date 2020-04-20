@@ -25,6 +25,8 @@ public class PlayerActivity extends AppCompatActivity {
     private SeekBar positionBar;
     private TextView currentTimeLabel;
     private TextView remainingTimeLabel;
+    private TextView nowSong;
+    String songName;
     int position;
     ArrayList<File> songs;
     Bundle bundle;
@@ -44,6 +46,8 @@ public class PlayerActivity extends AppCompatActivity {
         positionBar = findViewById(R.id.musicTime);
         currentTimeLabel = findViewById(R.id.currentTime);
         remainingTimeLabel = findViewById(R.id.remainingTime);
+        nowSong = findViewById(R.id.nowPlaying);
+
         handler = new Handler();
 
         if(mp != null){
@@ -56,6 +60,10 @@ public class PlayerActivity extends AppCompatActivity {
 
         songs = (ArrayList) bundle.getParcelableArrayList("list");
         position = bundle.getInt("position");
+        songName = songs.get(position).getName().toString();
+        String sName = getIntent().getStringExtra("SongName");
+
+        nowSong.setText(sName);
 
         Uri uri = Uri.parse(songs.get(position).toString());
         mp = MediaPlayer.create(this, uri);
@@ -90,8 +98,13 @@ public class PlayerActivity extends AppCompatActivity {
                 else{
                     position = 0;
                 }
+
+
+
                 mp.stop();
                 mp.release();
+                songName = songs.get(position).getName().toString();
+                nowSong.setText(songName);
                 Uri uri = Uri.parse(songs.get(position).toString());
                 mp = MediaPlayer.create(PlayerActivity.this, uri);
                 play.setImageResource(R.drawable.ic_pause);
@@ -110,8 +123,11 @@ public class PlayerActivity extends AppCompatActivity {
                 else{
                     position = 0;
                 }
+
                 mp.stop();
                 mp.release();
+                songName = songs.get(position).getName().toString();
+                nowSong.setText(songName);
                 Uri uri = Uri.parse(songs.get(position).toString());
                 mp = MediaPlayer.create(PlayerActivity.this, uri);
                 play.setImageResource(R.drawable.ic_pause);
@@ -159,6 +175,26 @@ public class PlayerActivity extends AppCompatActivity {
 
         String remainingTime = createTimeLabel(totalTime - mp.getCurrentPosition());
         remainingTimeLabel.setText("-" + remainingTime);
+
+        if(remainingTime.equals("0:00")){
+            if(position < songs.size() - 1){
+                position++;
+            }
+            else{
+                position = 0;
+            }
+            mp.stop();
+            mp.release();
+            songName = songs.get(position).getName().toString();
+            nowSong.setText(songName);
+            Uri uri = Uri.parse(songs.get(position).toString());
+            mp = MediaPlayer.create(PlayerActivity.this, uri);
+            play.setImageResource(R.drawable.ic_pause);
+            totalTime = mp.getDuration();
+            positionBar.setMax(totalTime);
+            mp.start();
+
+        }
 
 
         if(mp.isPlaying()){
