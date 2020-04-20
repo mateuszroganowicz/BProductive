@@ -121,7 +121,7 @@ public class PlayerActivity extends AppCompatActivity {
                     position = songs.size()-1;
                 }
                 else{
-                    position = 0;
+                    position --;
                 }
 
                 mp.stop();
