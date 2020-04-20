@@ -1,28 +1,23 @@
 package com.example.bproductive3;
 
 
-import android.media.MediaMetadata;
-import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 import java.util.ArrayList;
-import android.os.Handler;
-import android.widget.TextView;
-
-import java.util.logging.LogRecord;
 
 public class PlayerActivity extends AppCompatActivity {
 
-    private Button nextSong, prevSong;
+    private ImageButton nextSong, prevSong;
     private ImageButton play;
     static private MediaPlayer mp;
     private Runnable runnable;

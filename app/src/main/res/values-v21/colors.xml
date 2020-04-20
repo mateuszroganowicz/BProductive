@@ -27,8 +27,8 @@
 
     <!-- color palette angry theme-->
     <color name="angryPrimary">#C82121</color>
-    <color name="angrySecondary">#FBADAD</color>
-    <color name="angryText">#dee1ec</color>
+    <color name="angrySecondary">#F3D5D5</color>
+    <color name="angryText">#3C1212</color>
 
     <!-- color palette happy theme-->
     <color name="happyPrimary">#fbc11a</color>

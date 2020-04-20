@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -25,6 +26,9 @@ public class TodolistFragment extends Fragment
 {
     private TodoDAO dao;
     private ListView lv_taskList;
+    private static final int RB1_ID = 1;
+    private static final int RB2_ID = 2;
+    private static final int RB3_ID = 3;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -47,6 +51,13 @@ public class TodolistFragment extends Fragment
                 Button addButton = mView.findViewById(R.id.add_button);
                 Button cancelButton = mView.findViewById(R.id.cancel_button);
                 final RadioGroup priorityRadio = mView.findViewById(R.id.priorityRadioGroup);
+                RadioButton lowPriorRadio = mView.findViewById(R.id.radio_low);
+                RadioButton medPriorRadio = mView.findViewById(R.id.radio_med);
+                RadioButton highPriorRadio = mView.findViewById(R.id.radio_high);
+
+                lowPriorRadio.setId(RB1_ID);
+                medPriorRadio.setId(RB2_ID);
+                highPriorRadio.setId(RB3_ID);
 
                 mBuilder.setView(mView);
                 final AlertDialog dialog = mBuilder.create();
@@ -61,29 +72,21 @@ public class TodolistFragment extends Fragment
                             try
                             {
                                 int checkedBtt = priorityRadio.getCheckedRadioButtonId();
-                                switch(checkedBtt)
+                                Task task = new Task(-1, taskDescription.getText().toString(), checkedBtt);
+
+                                if(checkedBtt == -1)
                                 {
-                                    case 1:
-                                        Task task1 = new Task(-1, taskDescription.getText().toString(), 1);
-                                        dao.insertTodo(task1);
-                                        Toast.makeText(getActivity(), "Task: " + task1.getName() + " added successfully", Toast.LENGTH_SHORT).show();
-                                        dialog.dismiss();
-                                        break;
-                                    case 2:
-                                        Task task2 = new Task(-1, taskDescription.getText().toString(), 2);
-                                        dao.insertTodo(task2);
-                                        Toast.makeText(getActivity(), "Task: " + task2.getName() + " added successfully", Toast.LENGTH_SHORT).show();
-                                        dialog.dismiss();
-                                        break;
-                                    case 3:
-                                        Task task3 = new Task(-1, taskDescription.getText().toString(), 3);
-                                        dao.insertTodo(task3);
-                                        Toast.makeText(getActivity(), "Task: " + task3.getName() + " added successfully", Toast.LENGTH_SHORT).show();
-                                        dialog.dismiss();
-                                        break;
-                                    case -1:
-                                        Toast.makeText(getActivity(), "Select task priority!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Select task priority!", Toast.LENGTH_SHORT).show();
                                 }
+                                else
+                                {
+                                    dao.insertTodo(task);
+                                    //Toast.makeText(getActivity(), "Task: " + task.getName() + " added successfully", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "CheckedBtt: " + checkedBtt, Toast.LENGTH_SHORT).show();
+                                    checkedBtt = 0;
+                                    dialog.dismiss();
+                                }
+
                             }
                             catch(Exception e)
                             {

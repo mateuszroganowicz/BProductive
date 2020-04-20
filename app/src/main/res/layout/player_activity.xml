@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,76 +7,99 @@
     tools:context=".ui.music.MusicFragment"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:weightSum="100"
-    android:layout_marginTop="250dp">
+    android:weightSum="100">
 
     <SeekBar
         android:id="@+id/musicTime"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="1.0" />
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
         android:layout_weight="0.45"
-        >
+        app:layout_constraintBottom_toTopOf="@+id/playmusic_button"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="1.0">
+
         <TextView
             android:id="@+id/currentTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0:00"
             android:layout_marginLeft="50dp"
-            />
+            android:text="0:00" />
 
         <TextView
             android:id="@+id/remainingTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="-0:00"
             android:layout_marginLeft="230dp"
-            />
+            android:text="-0:00" />
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_weight="1"
-        android:layout_marginTop="30dp">
-        <Button
-            android:id="@+id/previous_song_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="&gt;&gt;"
-
-            android:minWidth="100dp"
-            android:minHeight="75dp"
-            />
-        <ImageButton
-            android:id="@+id/playmusic_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_button_timer"
-            android:src="@drawable/ic_play"
-
-            android:minWidth="100dp"
-            android:minHeight="75dp"
-            />
-        <Button
-            android:id="@+id/next_song_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="&gt;&gt;"
-
-            android:minWidth="100dp"
-            android:minHeight="75dp"
-            />
-
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
     </LinearLayout>
-</LinearLayout>
+
+
+
+    <ImageButton
+        android:id="@+id/playmusic_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="100dp"
+        android:layout_weight="1"
+        android:background="@drawable/rounded_button_timer"
+        android:minWidth="100dp"
+        android:minHeight="75dp"
+        android:src="@drawable/ic_play"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/previous_song_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@+id/playmusic_button"
+        app:layout_constraintEnd_toStartOf="@+id/playmusic_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/playmusic_button" />
+
+    <ImageButton
+        android:id="@+id/next_song_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_next"
+        app:layout_constraintBottom_toBottomOf="@+id/playmusic_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/playmusic_button"
+        app:layout_constraintTop_toTopOf="@+id/playmusic_button" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Now playing:"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/musicTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>

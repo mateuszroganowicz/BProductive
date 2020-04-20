@@ -66,10 +66,12 @@ public class TodoDAO extends SQLiteOpenHelper
 
         if(cursor.moveToFirst())
         {
+            db.close();
             return true;
         }
         else
         {
+            db.close();
             return false;
         }
     }
